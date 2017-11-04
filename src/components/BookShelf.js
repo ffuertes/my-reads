@@ -3,7 +3,7 @@ import Book from './Book';
 
 const BookShelf = ( props ) => {
     
-    const { shelf, books, title } = props;
+    const { shelf, books, title, onMoveBook } = props;
     const filteredBooks = books.filter( (book) => book.shelf === shelf );
         
     return (
@@ -12,7 +12,7 @@ const BookShelf = ( props ) => {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     { filteredBooks.map( ( book ) => (
-                        <Book key={book.id} data={book} />
+                        <Book key={book.id} book={book} onMoveBook={ onMoveBook } shelf={shelf} />
                     ))}
                 </ol>
             </div>

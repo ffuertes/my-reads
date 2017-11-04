@@ -8,12 +8,6 @@ import ListBooks from './components/ListBooks';
 import './App.css';
 
 class BooksApp extends Component {
-
-  // constructor(){
-  //   super();
-
-  //   this.onChangeView = this.onChangeView.bind(this);
-  // }
   
   state = {
     /**
@@ -23,14 +17,6 @@ class BooksApp extends Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false
-  }
-
-  onChangeView = () => {
-    this.setState({ showSearchPage: false });
-  }
-
-  goToSearch = () => {
-    this.setState({ showSearchPage: true });
   }
 
   render() {

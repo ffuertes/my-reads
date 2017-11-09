@@ -1,5 +1,6 @@
 html, body, .root {
   height: 100%;
+  overflow: auto;
 }
 body {
   line-height: 1.5;
@@ -83,6 +84,11 @@ body, .app {
   font-size: 1.25em;
   border: none;
   outline: none;
+}
+.search-message {
+  margin-top: 85px;
+  padding: 15px;
+  text-align: center;
 }
 
 .close-search {

@@ -6,9 +6,11 @@ import Book from './Book';
 
 export default class Search extends Component {
 
+    defaultMessage = '"Whenever you read a good book, somewhere in the world a door opens to allow in more light." – Vera Nazarian';
+    
     state = {
         query: '',
-        message: '"Whenever you read a good book, somewhere in the world a door opens to allow in more light." – Vera Nazarian',
+        message: this.defaultMessage,
         books: []
     }
 
@@ -19,8 +21,11 @@ export default class Search extends Component {
 
     getBooks = ( query ) => {
         // If there is no query clean state and return early.
-        if ( !query ) {
-            this.setState({ books: [] });
+        if ( '' === query ) {
+            this.setState({ 
+                books: [],
+                message: this.defaultMessage
+            });
             return;
         };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import * as BooksAPI from './BooksAPI';
 import Search from './components/Search';
@@ -29,17 +30,19 @@ class BooksApp extends Component {
 
   render() {
     return (
-      <div className='app'>
-        <Route exact path='/' render={() => (
-          <ListBooks books={ this.state.books } onMoveBook={ this.updateShelf } />
-        )} />
-        <Route path='/add' render={({ history }) => (
-          <Search onBack={ this.onChangeView } onMoveBook={ ( book, shelf ) => {
-            this.updateShelf( book, shelf );
-            history.push('/');
-          }} />
-        )} />
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <Route exact path='/' render={() => (
+            <ListBooks books={ this.state.books } onMoveBook={ this.updateShelf } />
+          )} />
+          <Route path='/add' render={({ history }) => (
+            <Search onBack={ this.onChangeView } onMoveBook={ ( book, shelf ) => {
+              this.updateShelf( book, shelf );
+              history.push('/');
+            }} />
+          )} />
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

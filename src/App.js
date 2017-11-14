@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import * as BooksAPI from './BooksAPI';
 import Search from './components/Search';
@@ -29,6 +30,7 @@ class BooksApp extends Component {
 
   render() {
     return (
+      <MuiThemeProvider>
       <div className='app'>
         <Route exact path='/' render={() => (
           <ListBooks books={ this.state.books } onMoveBook={ this.updateShelf } />
@@ -40,6 +42,7 @@ class BooksApp extends Component {
           }} />
         )} />
       </div>
+      </MuiThemeProvider>
     )
   }
 }

@@ -11,20 +11,62 @@ import './App.css';
 class BooksApp extends Component {
 
   state = {
-    books: []
+    books: {
+      all: {},
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+      none: []
+    }
   }
 
   componentDidMount() {
     BooksAPI.getAll().then( ( books ) => {
-        this.setState({ books });
+
+      const normalized = this.normalizeBooks(books);
+
+      console.log( normalized );
+
+      this.setState({
+        books: normalized
+      });
     });
   }
 
+  normalizeBooks = ( books ) => {
+    let normalized = Object.assign( {}, this.state.books );
+
+    books.map( (book) => {
+      normalized.all[book.id] = book;
+      switch ( book.shelf ) {
+        case 'currentlyReading':
+          return normalized.currentlyReading.push(book.id)
+        case 'wantToRead':
+          return normalized.wantToRead.push(book.id)
+        case 'read':
+          return normalized.read.push(book.id)
+        default:
+          return normalized.none.push(book.id);
+      }
+    });
+
+    return normalized;
+  }
+
   updateShelf = ( book, shelf ) => {
-    BooksAPI.update( book, shelf ).then( () => {
-      BooksAPI.getAll().then( ( books ) => {
-        this.setState({ books });
+    BooksAPI.update( book, shelf ).then( (response) => {
+      this.setState( ( prevState ) => {
+        prevState.books.all[book.id].shelf = shelf;
+        return {
+          books: {
+            all: prevState.books.all,
+            currentlyReading: response.currentlyReading,
+            wantToRead: response.wantToRead,
+            read: response.read,
+          }
+        }
       });
+      console.log( this.state );
     });
   }
 

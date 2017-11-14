@@ -6,10 +6,10 @@ import Book from './Book';
 const BookShelf = ( props ) => {
 
     const { shelf, books, title, onMoveBook } = props;
-    const filteredBooks = books.filter( (book) => book.shelf === shelf );
+    const filteredBooks = books[shelf];
 
     // Sort books by titles
-    filteredBooks.sort( sortBy('title') );
+    // filteredBooks.sort( sortBy('title') );
 
     const shelvesMessages = {
         currentlyReading: "It's time to start reading a new book!",
@@ -28,10 +28,10 @@ const BookShelf = ( props ) => {
                 )}
                 { filteredBooks.length > 0 && (
                     <ol className="books-grid">
-                        { filteredBooks.map( ( book ) => (
+                        { filteredBooks.map( ( bookId ) => (
                             <Book
-                                key={book.id}
-                                book={book}
+                                key={bookId}
+                                book={books.all[bookId]}
                                 onMoveBook={onMoveBook}
                                 shelf={shelf} />
                         ))}

@@ -32,7 +32,7 @@ class ListBooks extends Component {
                     <Tab label="Want to Read" value={1} />
                     <Tab label="Read" value={2} />
                 </Tabs>
-    
+
                 <div className="list-books-content">
                     <SwipeableViews index={index} onChangeIndex={this.handleChange}>
                         <BookShelf title="Currently Reading" books={ books } shelf="currentlyReading" onMoveBook={ onMoveBook } />
@@ -40,11 +40,11 @@ class ListBooks extends Component {
                         <BookShelf title="Read" books={ books } shelf="read" onMoveBook={ onMoveBook } />
                     </SwipeableViews>
                 </div>
-    
+
                 <Link to='add' className="open-search">
-                <FloatingActionButton>
-                    <ContentAdd />
-                </FloatingActionButton>
+                    <FloatingActionButton>
+                        <ContentAdd />
+                    </FloatingActionButton>
                 </Link>
             </div>
         );

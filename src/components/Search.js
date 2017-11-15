@@ -7,7 +7,7 @@ import Book from './Book';
 export default class Search extends Component {
 
     defaultMessage = '"Whenever you read a good book, somewhere in the world a door opens to allow in more light." – Vera Nazarian';
-    
+
     state = {
         query: '',
         message: this.defaultMessage,
@@ -22,7 +22,7 @@ export default class Search extends Component {
     getBooks = ( query ) => {
         // If there is no query clean state and return early.
         if ( '' === query ) {
-            this.setState({ 
+            this.setState({
                 books: [],
                 message: this.defaultMessage
             });
@@ -44,6 +44,8 @@ export default class Search extends Component {
 
     render() {
         const { books, query, message } = this.state;
+
+        let cleanBooks = books.filter( book => this.props.booksIds.indexOf( book.id ) < 0 );
 
         return (
             <div className="search-books">
@@ -71,13 +73,13 @@ export default class Search extends Component {
                     </div> )}
                     <div className="search-books-results">
                     <ol className="books-grid">
-                        {books && books.map( (book ) => (
-                            <Book
+                        {books && cleanBooks.map( (book) => {
+                            return ( <Book
                                 key={book.id}
                                 book={book}
                                 shelf={book.shelf || 'none'}
-                                onMoveBook={this.props.onMoveBook} />
-                        ))}
+                                onMoveBook={this.props.onMoveBook} /> )
+                        })}
                     </ol>
                 </div>
             </div>

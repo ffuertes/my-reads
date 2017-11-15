@@ -14,7 +14,7 @@ export default class Book extends Component {
 
         // Handle books without thumbnails and without authors.
         const thumb = book.imageLinks ? book.imageLinks.thumbnail : defaultCover;
-        const author = book.authors ? book.authors : 'Anonymous';
+        const authors = book.authors ? book.authors : ['Anonymous'];
 
         return (
             <li>
@@ -32,7 +32,9 @@ export default class Book extends Component {
                         </div>
                     </div>
                     <div className="book-title">{ book.title }</div>
-                    <div className="book-authors">{ author }</div>
+                    <div className="book-authors">{ authors.map( (author, index) => {
+                        return index === authors.length - 1 ? author : `${author}, `;
+                    }) }</div>
                 </div>
             </li>
         )

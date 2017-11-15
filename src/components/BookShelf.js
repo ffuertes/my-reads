@@ -1,4 +1,6 @@
 import React from 'react';
+import sortBy from 'sort-by';
+
 import Book from './Book';
 
 const BookShelf = ( props ) => {
@@ -6,9 +8,12 @@ const BookShelf = ( props ) => {
     const { shelf, books, title, onMoveBook } = props;
     const filteredBooks = books.filter( (book) => book.shelf === shelf );
 
+    // Sort books by titles
+    filteredBooks.sort( sortBy('title') );
+
     const shelvesMessages = {
         currentlyReading: "It's time to start reading a new book!",
-        wantToRead: "Check out our new books, sure you are going to find some interesting to read.",
+        wantToRead: "Check out our new books! Sure enough you're going to find something interesting to read.",
         read: "Nothing here yet!",
     };
 

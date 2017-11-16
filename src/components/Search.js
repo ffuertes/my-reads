@@ -10,13 +10,11 @@ export default class Search extends Component {
     defaultMessage = '"Whenever you read a good book, somewhere in the world a door opens to allow in more light." – Vera Nazarian';
 
     state = {
-        query: '',
         message: this.defaultMessage,
         books: []
     }
 
     getBooks = ( query ) => {
-        this.setState({ query });
 
         // If there is no query clean state and return.
         if ( '' === query ) {
@@ -33,7 +31,7 @@ export default class Search extends Component {
                     message: `No results for "${query}". Please try again with a different keyword.`,
                     books: []
                 });
-            } else if( books ) {
+            } else if( books && query !== '' ) {
                 this.setState({ books });
             }
         })
@@ -54,7 +52,6 @@ export default class Search extends Component {
                             type="text"
                             placeholder="Search by title or author"
                             onChange={ (e) => search( e.target.value ) } />
-
                     </div>
                 </div>
                     { books.length < 1 && ( <div className="search-message">

@@ -1,11 +1,11 @@
 import React from 'react';
-// import sortBy from 'sort-by';
+import PropTypes from 'prop-types';
 
 import Book from './Book';
 
 const BookShelf = ( props ) => {
 
-    const { shelf, books, title, onMoveBook } = props;
+    const { shelf, books, title, onMoveBook, labels } = props;
 
     const shelvesMessages = {
         currentlyReading: "It's time to start reading a new book!",
@@ -28,7 +28,7 @@ const BookShelf = ( props ) => {
                             let book = books.byIds[id];
                             return (
                                 <Book
-                                    labels={props.labels}
+                                    labels={labels}
                                     key={book.id}
                                     book={book}
                                     onMoveBook={onMoveBook}
@@ -43,3 +43,11 @@ const BookShelf = ( props ) => {
 }
 
 export default BookShelf;
+
+BookShelf.propTypes = {
+    shelf: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    books: PropTypes.object.isRequired,
+    onMoveBook: PropTypes.func.isRequired,
+    labels: PropTypes.object,
+}

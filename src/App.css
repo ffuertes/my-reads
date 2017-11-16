@@ -7,10 +7,25 @@ body {
 }
 body, .app {
   background: white;
+  height: 100%;
 }
 
+.app-header {
+  position: fixed !important;
+  height: 50px !important;
+  line-height: 1 !important;
+}
+.app-navigation {
+  position: fixed !important;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+.app-header h1 {
+  line-height: 50px !important;
+}
 /* main page */
-
 .list-books-title {
   padding: 10px 0;
   background: #2e7c31;
@@ -23,8 +38,17 @@ body, .app {
 }
 
 .list-books-content {
-  padding: 0 0 80px;
-  flex: 1;
+  padding: 0;
+  overflow: auto;
+  position: absolute;
+  top: 98px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.list-books-content > div,
+.list-books-content > div > div {
+  height: 100%;
 }
 
 .bookshelf {

@@ -13,7 +13,10 @@ class BooksApp extends Component {
   state = {
     books: {
       all: [],
-      allIds: [],
+      byIds: {},
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
     },
   }
 
@@ -26,10 +29,32 @@ class BooksApp extends Component {
   }
 
   normalize = ( books ) => {
-    let data = Object.assign({}, this.state.books );
+    let data = {
+      all: [],
+      byIds: {},
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    };
 
     data.all = books;
-    data.allIds = books.map( book => book.id );
+    books.map( book => { 
+      data.byIds[book.id] = book;
+      switch ( book.shelf ) {
+        case 'currentlyReading':
+          data.currentlyReading.push(book.id);
+          break;
+        case 'wantToRead':
+          data.wantToRead.push(book.id);
+          break;
+        case 'read':
+          data.read.push(book.id);
+          break;
+        default:
+          break;
+      }
+      return book.id; 
+    });
 
     return data;
   }
@@ -37,11 +62,11 @@ class BooksApp extends Component {
   updateShelf = ( book, shelf ) => {
     BooksAPI.update( book, shelf )
       .then( () => this.setState( ( prevState ) => {
-        let books = prevState.books.all.map( (b) => {
-          b.shelf = b.id === book.id ? shelf : b.shelf;
-          return b;
-        });
-        return { books: this.normalize( books ) }
+          let books = prevState.books.all.map( (b) => {
+            b.shelf = b.id === book.id ? shelf : b.shelf;
+            return b;
+          });
+          return { books: this.normalize( books ) }
         })
       );
   }
@@ -58,17 +83,31 @@ class BooksApp extends Component {
   }
 
   render() {
+
+    const labels = {
+      currentlyReading: 'Reading',
+      wantToRead: 'Want to Read',
+      read: 'Read',
+      none: 'None'
+    }
+
     return (
       <MuiThemeProvider>
       <div className='app'>
         <Route exact path='/' render={() => (
-          <ListBooks books={ this.state.books.all } onMoveBook={ this.updateShelf } />
+          <ListBooks 
+            labels={labels}
+            books={ this.state.books } 
+            onMoveBook={ this.updateShelf } />
         )} />
         <Route path='/add' render={({ history }) => (
-          <Search onBack={ this.onChangeView } booksIds={ this.state.books.allIds } onMoveBook={ ( book, shelf ) => {
-            this.addBook( book, shelf );
-            history.push('/');
-          }} />
+          <Search 
+            labels={labels}
+            booksByIds={ this.state.books.byIds } 
+            onMoveBook={ ( book, shelf ) => {
+              this.addBook( book, shelf );
+              history.push('/');
+            }} />
         )} />
       </div>
       </MuiThemeProvider>

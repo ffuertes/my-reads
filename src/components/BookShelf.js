@@ -1,15 +1,11 @@
 import React from 'react';
-import sortBy from 'sort-by';
+// import sortBy from 'sort-by';
 
 import Book from './Book';
 
 const BookShelf = ( props ) => {
 
     const { shelf, books, title, onMoveBook } = props;
-    const filteredBooks = books.filter( (book) => book.shelf === shelf );
-
-    // Sort books by titles
-    filteredBooks.sort( sortBy('title') );
 
     const shelvesMessages = {
         currentlyReading: "It's time to start reading a new book!",
@@ -21,20 +17,24 @@ const BookShelf = ( props ) => {
         <div className="bookshelf">
             <h2 className="bookshelf-title">{ title }</h2>
             <div className="bookshelf-books">
-                { filteredBooks.length < 1 && (
+                { books[shelf].length < 1 && (
                     <div className="no-books-message">
                         {shelvesMessages[shelf]}
                     </div>
                 )}
-                { filteredBooks.length > 0 && (
+                { books[shelf].length > 0 && (
                     <ol className="books-grid">
-                        { filteredBooks.map( ( book ) => (
-                            <Book
-                                key={book.id}
-                                book={book}
-                                onMoveBook={onMoveBook}
-                                shelf={shelf} />
-                        ))}
+                        { books[shelf].map( id => {
+                            let book = books.byIds[id];
+                            return (
+                                <Book
+                                    labels={props.labels}
+                                    key={book.id}
+                                    book={book}
+                                    onMoveBook={onMoveBook}
+                                    shelf={shelf} />
+                            )})
+                        }
                     </ol>
                 )}
             </div>

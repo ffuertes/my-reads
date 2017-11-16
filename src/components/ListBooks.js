@@ -21,7 +21,7 @@ class ListBooks extends Component {
     }
 
     render() {
-        const { books, onMoveBook } = this.props;
+        const { books, onMoveBook, labels } = this.props;
         const { index } = this.state;
         return (
             <div className="list-books">
@@ -35,9 +35,9 @@ class ListBooks extends Component {
 
                 <div className="list-books-content">
                     <SwipeableViews index={index} onChangeIndex={this.handleChange}>
-                        <BookShelf title="Currently Reading" books={ books } shelf="currentlyReading" onMoveBook={ onMoveBook } />
-                        <BookShelf title="Want to Read" books={ books } shelf="wantToRead" onMoveBook={ onMoveBook }/>
-                        <BookShelf title="Read" books={ books } shelf="read" onMoveBook={ onMoveBook } />
+                        <BookShelf labels={labels} title="Currently Reading" books={ books } shelf="currentlyReading" onMoveBook={ onMoveBook } />
+                        <BookShelf labels={labels} title="Want to Read" books={ books } shelf="wantToRead" onMoveBook={ onMoveBook }/>
+                        <BookShelf labels={labels} title="Read" books={ books } shelf="read" onMoveBook={ onMoveBook } />
                     </SwipeableViews>
                 </div>
 

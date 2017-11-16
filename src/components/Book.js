@@ -10,7 +10,7 @@ export default class Book extends Component {
     }
 
     render() {
-        const { book, shelf } = this.props;
+        const { book, shelf, search, labels } = this.props;
 
         // Handle books without thumbnails and without authors.
         const thumb = book.imageLinks ? book.imageLinks.thumbnail : defaultCover;
@@ -20,16 +20,20 @@ export default class Book extends Component {
             <li>
                 <div className="book">
                     <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + thumb + ')' }}></div>
-                        <div className="book-shelf-changer">
+                        <div className="book-cover-wrap">
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + thumb + ')' }}></div>
+                            {(search && shelf !== 'none') && (
+                                <div className={`book-shlef-label ${shelf}`}>{labels[shelf]}</div>
+                            )}
+                        </div>
+                        { ( shelf === 'none' || !search ) && ( <div className="book-shelf-changer">
                             <select value={ shelf } onChange={ this.onSelectChange } >
                                 <option value="none" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
+                                {Object.keys(labels).map((value) => (
+                                    <option key={value} value={value}>{labels[value]}</option>
+                                ))}
                             </select>
-                        </div>
+                        </div> )}
                     </div>
                     <div className="book-title">{ book.title }</div>
                     <div className="book-authors">{ authors.map( (author, index) => {

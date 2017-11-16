@@ -137,6 +137,26 @@ body, .app {
 .book-authors {
   color: #999;
 }
+.book-cover-wrap {
+  position: relative;
+}
+.book-shlef-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9rem;
+  background: rgba(255,200,0,0.8);
+}
+.book-shlef-label.read {
+  background: rgba(60,150,0,0.8);
+}
+.book-shlef-label.currentlyReading {
+  background: rgba(60,0,190,0.8);
+}
 
 .book-top {
   position: relative;
